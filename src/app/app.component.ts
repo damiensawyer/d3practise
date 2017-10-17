@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
     <p>
       app Works!
     </p>
+    <alert type="success">hello</alert>
   `,
   styles: []
 })
