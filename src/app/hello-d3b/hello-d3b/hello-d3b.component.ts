@@ -1,25 +1,22 @@
-import { APP_CONFIG, AppConfig } from '../../classes/app-config';
+import { ChartDate } from '../../classes/chart-date';
+import { APP_CONFIG } from '../../classes/app-config';
 import { inject } from '@angular/core/testing';
 import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { SampleChartService } from '../../classes/sample-chart';
+import { AppConfig } from '../../classes/AppConfigInterface';
 
 @Component({
   selector: 'app-hello-d3b',
-  template: `
-    <p>
-      hello-d3b works!
-      {{ message }}
-    </p>
-  `,
+  templateUrl: 'hello-d3b.html',
   styles: []
 })
 export class HelloD3bComponent implements OnInit {
+  sampleChart: ChartDate[];
   message: string;
-  constructor(
-    @Inject(APP_CONFIG) config: AppConfig, 
-    sampleChart: SampleChartService) {
+  constructor(@Inject(APP_CONFIG) config: AppConfig, sampleChart: SampleChartService) {
     this.message = config.name;
+    this.sampleChart = sampleChart.simpleChart();
   }
 
   ngOnInit() {
