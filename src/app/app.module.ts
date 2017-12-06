@@ -1,3 +1,5 @@
+import { SampleChartService } from './classes/sample-chart';
+import { providerDef } from '@angular/core/src/view/provider';
 import { HelloD3bComponent } from './hello-d3b/hello-d3b/hello-d3b.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { Component, InjectionToken, NgModule, OnInit } from '@angular/core';
@@ -7,7 +9,7 @@ import { AlertModule } from 'ngx-bootstrap';
 import { HelloD3Component } from './hello-d3/hello-d3.component';
 import { Routes, RouterModule } from '@angular/router';
 import { IntroComponent } from './intro/intro/intro.component';
-import { APP_CONFIG, AppConfig, appConfig } from './classes/app-config';
+import { APP_CONFIG, appConfig } from './classes/app-config';
 
 var routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'intro' },
@@ -15,6 +17,7 @@ var routes: Routes = [
   { path: 'hello-d3', component: HelloD3Component },
   { path: 'hello-d3b', component: HelloD3bComponent }
 ];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,8 +31,9 @@ var routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   providers: [
-    {provide:APP_CONFIG, useValue:appConfig}
+    {provide:APP_CONFIG, useValue:appConfig},
+    SampleChartService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { } 

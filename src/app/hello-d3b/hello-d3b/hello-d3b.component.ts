@@ -2,6 +2,7 @@ import { APP_CONFIG, AppConfig } from '../../classes/app-config';
 import { inject } from '@angular/core/testing';
 import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import * as d3 from 'd3';
+import { SampleChartService } from '../../classes/sample-chart';
 
 @Component({
   selector: 'app-hello-d3b',
@@ -15,7 +16,9 @@ import * as d3 from 'd3';
 })
 export class HelloD3bComponent implements OnInit {
   message: string;
-  constructor(@Inject(APP_CONFIG) config: AppConfig) {
+  constructor(
+    @Inject(APP_CONFIG) config: AppConfig, 
+    sampleChart: SampleChartService) {
     this.message = config.name;
   }
 
