@@ -1,3 +1,4 @@
+import { style } from '@angular/animations';
 import { Component } from '@angular/core';
 
 @Component({
@@ -10,7 +11,7 @@ import { Component } from '@angular/core';
     <router-outlet></router-outlet>
     </div>
   `,
-  styles: []
+  styles: ['html body {background-color: rgba(0,0,0,1.00)}']
 })
 export class AppComponent {
   title = 'app';
