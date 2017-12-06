@@ -10,6 +10,7 @@ import { HelloD3Component } from './hello-d3/hello-d3.component';
 import { Routes, RouterModule } from '@angular/router';
 import { IntroComponent } from './intro/intro/intro.component';
 import { APP_CONFIG, appConfig } from './classes/app-config';
+import { Test4Component } from './classes/test4/test4.component';
 
 var routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'intro' },
@@ -23,7 +24,8 @@ var routes: Routes = [
     AppComponent,
     HelloD3Component,
     HelloD3bComponent,
-    IntroComponent
+    IntroComponent,
+    Test4Component
   ],
   imports: [
     BrowserModule,

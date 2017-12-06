@@ -8,8 +8,8 @@ import { AppConfig } from '../../classes/AppConfigInterface';
 
 @Component({
   selector: 'app-hello-d3b',
-  templateUrl: 'hello-d3b.html',
-  styles: []
+  templateUrl: 'hello-d3b.component.html',
+  styleUrls: ['./hello-d3b.component.css']
 })
 export class HelloD3bComponent implements OnInit {
   sampleChart: ChartDate[];
