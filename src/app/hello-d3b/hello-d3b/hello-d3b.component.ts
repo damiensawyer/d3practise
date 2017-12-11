@@ -37,8 +37,8 @@ export class HelloD3bComponent implements OnInit {
       .enter();
 
     var line = d3.line()
-      .x(a => a[0])
-      .y(a => a[1]);
+      .x(a => xScale(a[0]))
+      .y(a => yScale(a[1]));
 
     data.append("circle")
       .attr("cx", function (d, i) { return xScale(i) })
@@ -47,7 +47,7 @@ export class HelloD3bComponent implements OnInit {
       .attr("fill", "#666666");
 
     data.append("path")
-      .attr("d", line([[50, 50], [100, 100]]))
+      .attr("d", line([[2, 10], [4, 30], [7, 80], [10, 100]]))
       .attr("stroke", "purple")
       .attr("stroke-width", 2)
       .attr("fill", "none");
