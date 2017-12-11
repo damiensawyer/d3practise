@@ -21,34 +21,22 @@ export class HelloD3bComponent implements OnInit {
 
   ngOnInit() {
     var h = 350;
-    var w = 400;
-
-    var monthlySales = [
-      { "month": 10, "sales": 100 },
-      { "month": 20, "sales": 130 },
-      { "month": 30, "sales": 250 },
-      { "month": 40, "sales": 300 },
-      { "month": 50, "sales": 265 },
-      { "month": 60, "sales": 225 },
-      { "month": 70, "sales": 180 },
-      { "month": 80, "sales": 120 },
-      { "month": 90, "sales": 145 },
-      { "month": 100, "sales": 130 }
-    ];
-
-
+    var w = 1200;
+    var padding = 25;
+    var xScale = d3.scaleLinear().domain([1, this.sampleChart.length]).range([padding + 5, w - padding]);
+    var r = xScale(20);
     //create our SVG
     var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
 
 
     //add dots
     var dots = svg.selectAll("circle")
-      .data(monthlySales)
+      .data(this.sampleChart)
       .enter()
       .append("circle")
-      .attr("cx", function (d) { return d.month * 3; })
-      .attr("cy", function (d) { return h - d.sales; })
-      .attr("r", 5)
+      .attr("cx", function (d, i) { return xScale(i) })
+      .attr("cy", function (d) { return h / 2 })
+      .attr("r", 20)
       .attr("fill", "#666666");
 
   }
