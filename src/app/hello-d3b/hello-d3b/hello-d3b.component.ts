@@ -20,16 +20,29 @@ export class HelloD3bComponent implements OnInit {
     this.sampleChart = sampleChart.simpleChart();
   }
 
-  ngOnInit() {
+  mode(setting: number) {
+    this.draw(setting);
+  }
+
+  draw(setting: number) {
     var h = 550;
     var w = 900;
 
     var xScale = d3.scaleLinear().domain([0, this.sampleChart.length - 1]).range([0, w]);
     var yScale = d3.scaleLinear().domain([1, 100]).range([0, h]);
+    var yAxis = d3.axisLeft(yScale);
+
     var padding = 5;
-    var r = (xScale(1) / 2) - padding;
+    var r = ((xScale(1) / 2) - padding) * setting;
     //create our SVG
-    var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
+    // var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
+    var svg = d3.select("body").select("#target").attr("width", w).attr("height", h);
+
+
+    var axis = svg.append("g").call(yAxis)
+      .attr("class", "axis")
+      .attr("transform", "translate(" + padding + ",0)");
+
 
     var d = this.sampleChart.slice(0, 30);
     //add dots
@@ -42,9 +55,13 @@ export class HelloD3bComponent implements OnInit {
       .x(a => xScale(a[0]))
       .y(a => yScale(a[1]));
 
-    data.append("circle")
+    data.append("circle");
+    data.selectAll("circle")
+      .transition()
+      .duration(500)
+      .ease(d3.easeLinear)
       .attr("cx", function (d, i) { return xScale(i) + r })
-      .attr("cy", function (d) { return h / 2 })
+      .attr("cy", function (d) { return h / (2 + setting) })
       .attr("r", r)
       .attr("fill", "#666666");
 
@@ -54,5 +71,11 @@ export class HelloD3bComponent implements OnInit {
       .attr("stroke", "red")
       .attr("stroke-width", 2)
       .attr("fill", "none");
+
+
+  }
+
+  ngOnInit() {
+    this.draw(1);
   }
 }

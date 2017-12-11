@@ -1,6 +1,7 @@
 <p class="damien">
-    hsello-d3b works! {{ message }}
+    hsllo-d3b works! {{ message }}
 </p>
-<div *ngFor="let myProduct of sampleChart">
-    {{ myProduct.index}} {{ myProduct.description}} {{ myProduct.sticker}}
-</div>
+<button class="btn btn-info" (click)="mode(1)">mode1</button>
+<button class="btn btn-info" (click)="mode(2)">mode2</button>
+
+<svg id="target"></svg>
