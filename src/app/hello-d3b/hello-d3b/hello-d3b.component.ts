@@ -21,19 +21,21 @@ export class HelloD3bComponent implements OnInit {
   }
 
   ngOnInit() {
-    var h = 350;
-    var w = 1200;
-    var padding = 25;
-    var xScale = d3.scaleLinear().domain([1, this.sampleChart.length]).range([padding + 5, w - padding]);
-    var yScale = d3.scaleLinear().domain([1, 100]).range([padding + 5, h - padding]);
-    var r = xScale(20);
+    var h = 550;
+    var w = 900;
+
+    var xScale = d3.scaleLinear().domain([0, this.sampleChart.length - 1]).range([0, w]);
+    var yScale = d3.scaleLinear().domain([1, 100]).range([0, h]);
+    var padding = 5;
+    var r = (xScale(1) / 2) - padding;
     //create our SVG
     var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
 
-
+    var d = this.sampleChart.slice(0, 30);
     //add dots
-    var data = svg.selectAll("circle")
-      .data(this.sampleChart)
+    var data = svg
+      .selectAll("circle")
+      .data(d)
       .enter();
 
     var line = d3.line()
@@ -41,14 +43,15 @@ export class HelloD3bComponent implements OnInit {
       .y(a => yScale(a[1]));
 
     data.append("circle")
-      .attr("cx", function (d, i) { return xScale(i) })
+      .attr("cx", function (d, i) { return xScale(i) + r })
       .attr("cy", function (d) { return h / 2 })
-      .attr("r", 20)
+      .attr("r", r)
       .attr("fill", "#666666");
 
+    var points = <[number, number][]>_.map(d, (x, i) => [i, x.sticker]);
     data.append("path")
-      .attr("d", line([[2, 10], [4, 30], [7, 80], [10, 100]]))
-      .attr("stroke", "purple")
+      .attr("d", line(points))
+      .attr("stroke", "red")
       .attr("stroke-width", 2)
       .attr("fill", "none");
   }
