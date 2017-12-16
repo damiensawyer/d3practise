@@ -73,6 +73,31 @@ export class HelloD3bComponent implements OnInit {
       .attr("stroke-width", 2)
       .attr("fill", "none");
 
+
+
+    var dx = [{ id: 1 }, { id: 2 }, { id: 3 }];
+
+
+    d3.xml('../../../assets/Set1/11-PossiblyFertifle.svg', (a, xml) => {
+      // if (error) throw error;
+
+      d3.select('svg').selectAll(".complexObject")
+        .data(dx)
+        .enter()
+        .append(function () {
+          var importedNode = document.importNode(xml.documentElement, true);
+          var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          g.appendChild(importedNode);
+          g.setAttribute('classname', 'complexObject');
+          return g;
+        })
+        .attr('transform', function (d, i) {
+          return "translate(0, " + (i * 100) + "), scale(0.2)";
+        });
+
+    });
+
+
     //var ss = d3.xml("../../../assets/Set1/11-PossiblyFertifle.svg", (this: Request, error: any, d: any) => { });
     // var ss = d3.xml("../../../assets/Set1/11-PossiblyFertifle.svg", (t: Request, d: any) => {
     //   var importedNode = document.importNode(d.documentElement, true);
