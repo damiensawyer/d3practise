@@ -26,7 +26,7 @@ export class HelloD3bComponent implements OnInit {
   }
 
   draw(setting: number) {
-    var h = 550;
+    var h = 2550;
     var w = 900;
 
     var xScale = d3.scaleLinear().domain([0, this.sampleChart.length - 1]).range([0, w]);
@@ -37,7 +37,10 @@ export class HelloD3bComponent implements OnInit {
     var r = ((xScale(1) / 2) - padding) * setting;
     //create our SVG
     // var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
-    var svg = d3.select("body").select("#target").attr("width", w).attr("height", h);
+    var svg = d3.select("body")
+      .select("#target")
+      .attr("width", w)
+      .attr("height", h);
 
 
     var axis = svg.append("g").call(yAxis)
@@ -48,7 +51,7 @@ export class HelloD3bComponent implements OnInit {
     var d = this.sampleChart.slice(0, 30);
     //add dots
     var data = svg
-      .selectAll(".sticker")
+      .selectAll()
       .data(d)
       .enter();
 
@@ -73,24 +76,17 @@ export class HelloD3bComponent implements OnInit {
       .attr("stroke-width", 2)
       .attr("fill", "none");
 
-
-
-    var dx = [{ id: 1 }, { id: 2 }, { id: 3 }];
-
-
-    d3.xml('../../../assets/Set1/11-PossiblyFertifle.svg', (a, xml) => {
+    d3.xml('../../../assets/Set1/17-PossiblyFertile1.svg', (a, xml) => {
       // if (error) throw error;
+      data.append(() => {
+        var importedNode = document.importNode(xml.documentElement, true);
 
-      d3.select('svg').selectAll(".complexObject")
-        .data(dx)
-        .enter()
-        .append(function () {
-          var importedNode = document.importNode(xml.documentElement, true);
-          var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-          g.appendChild(importedNode);
-          g.setAttribute('classname', 'complexObject');
-          return g;
-        })
+        var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        g.appendChild(importedNode);
+        g.setAttribute('class', 'sticker');
+        return g;
+      })
+        //.attr("cx", function (d, i) { return xScale(i) + r })
         .attr('transform', function (d, i) {
           return "translate(0, " + (i * 100) + "), scale(0.2)";
         });
