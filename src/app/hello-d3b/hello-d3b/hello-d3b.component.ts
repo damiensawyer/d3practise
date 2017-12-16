@@ -22,11 +22,11 @@ export class HelloD3bComponent implements OnInit {
   }
 
   mode(setting: number) {
-    this.draw(setting);
+    //this.draw(setting);
   }
 
-  draw(setting: number) {
-    var h = 2550;
+  draw(setting: number, xml) {
+    var h = 350;
     var w = 900;
 
     var xScale = d3.scaleLinear().domain([0, this.sampleChart.length - 1]).range([0, w]);
@@ -37,8 +37,7 @@ export class HelloD3bComponent implements OnInit {
     var r = ((xScale(1) / 2) - padding) * setting;
     //create our SVG
     // var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
-    var svg = d3.select("body")
-      .select("#target")
+    var svg = d3.selectAll(".target")
       .attr("width", w)
       .attr("height", h);
 
@@ -76,22 +75,25 @@ export class HelloD3bComponent implements OnInit {
       .attr("stroke-width", 2)
       .attr("fill", "none");
 
-    d3.xml('../../../assets/Set1/17-PossiblyFertile1.svg', (a, xml) => {
-      // if (error) throw error;
-      data.append(() => {
-        var importedNode = document.importNode(xml.documentElement, true);
 
+    // if (error) throw error;
+    data
+
+      //.selectAll("circle")
+      .append(() => {
+        var importedNode = document.importNode(xml.documentElement, true);
         var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
         g.appendChild(importedNode);
         g.setAttribute('class', 'sticker');
         return g;
       })
-        //.attr("cx", function (d, i) { return xScale(i) + r })
-        .attr('transform', function (d, i) {
-          return "translate(0, " + (i * 100) + "), scale(0.2)";
-        });
+      .attr('transform', function (d, i) {
+        return "translate(0, " + (i * 100) + "), scale(0.1)";
+      })
+      .attr("cx", function (d, i) { return xScale(i) + r })
+      .enter();
 
-    });
+
 
 
     //var ss = d3.xml("../../../assets/Set1/11-PossiblyFertifle.svg", (this: Request, error: any, d: any) => { });
@@ -118,6 +120,8 @@ export class HelloD3bComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.draw(1);
+    d3.xml('../../../assets/Set1/17-PossiblyFertile1.svg', (a, xml) => {
+      this.draw(1, xml);
+    });
   }
 }

@@ -1,0 +1,10 @@
+.myspace, .target .myspace {
+    background: #000 !important;
+}
+
+.chartBlock
+{
+    width:100px;
+    height:200px; 
+    background-color: yellow;
+}
