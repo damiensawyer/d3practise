@@ -6,6 +6,7 @@ import * as d3 from 'd3';
 import * as _ from 'lodash';
 import { SampleChartService } from '../../classes/sample-chart';
 import { AppConfig } from '../../classes/AppConfigInterface';
+import { Element } from '@angular/compiler';
 
 @Component({
   selector: 'app-hello-d3b',
@@ -47,7 +48,7 @@ export class HelloD3bComponent implements OnInit {
     var d = this.sampleChart.slice(0, 30);
     //add dots
     var data = svg
-      .selectAll("circle")
+      .selectAll(".sticker")
       .data(d)
       .enter();
 
@@ -59,7 +60,7 @@ export class HelloD3bComponent implements OnInit {
     data.selectAll("circle")
       .transition()
       .duration(500)
-      .ease(d3.easeLinear)
+      .ease(d3.easeBounceOut)
       .attr("cx", function (d, i) { return xScale(i) + r })
       .attr("cy", function (d) { return h / (2 + setting) })
       .attr("r", r)
@@ -71,6 +72,26 @@ export class HelloD3bComponent implements OnInit {
       .attr("stroke", "red")
       .attr("stroke-width", 2)
       .attr("fill", "none");
+
+    //var ss = d3.xml("../../../assets/Set1/11-PossiblyFertifle.svg", (this: Request, error: any, d: any) => { });
+    // var ss = d3.xml("../../../assets/Set1/11-PossiblyFertifle.svg", (t: Request, d: any) => {
+    //   var importedNode = document.importNode(d.documentElement, true);
+
+    //   d3.selectAll("circle")
+    //     .each((c: HTMLElement) => {
+    //       c.appendChild(importedNode);
+    //     });
+
+    // });
+
+
+    // d3.xml("./atom.svg", "image/svg+xml", function (xml) {
+    //   document.getElementById('atom').appendChild(xml.documentElement);
+    //   window.setInterval(redElectron.draw, 50);
+    //   window.setInterval(purpleElectron.draw, 45);
+    //   window.setInterval(dash.draw, 45);
+    // });
+
 
 
   }
