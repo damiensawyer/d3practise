@@ -12,12 +12,14 @@ import { IntroComponent } from './intro/intro/intro.component';
 import { APP_CONFIG, appConfig } from './classes/app-config';
 import { Test4Component } from './classes/test4/test4.component';
 import { FirstchartComponent } from './firstchart/firstchart.component';
+import { StraighthtmlComponent } from './straighthtml/straighthtml.component';
 
 var routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'intro' },
   { path: 'intro', component: IntroComponent },
   { path: 'hello-d3', component: HelloD3Component },
   { path: 'hello-d3b', component: HelloD3bComponent },
+  { path: 'straight-html', component: StraighthtmlComponent },
   { path: 'firstchart', component: FirstchartComponent }
 ];
 @NgModule({
@@ -27,7 +29,8 @@ var routes: Routes = [
     HelloD3bComponent,
     IntroComponent,
     Test4Component,
-    FirstchartComponent
+    FirstchartComponent,
+    StraighthtmlComponent
   ],
   imports: [
     BrowserModule,
