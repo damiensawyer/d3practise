@@ -6,6 +6,7 @@ declare module 'd3-selection' {
         sendMessage(...any): Selection<EnterElement, Datum, PElement, PDatum>
         makeCircle(color: string, cx: number, cy: number): Selection<EnterElement, Datum, PElement, PDatum>
         appendSVG(SVGString: string): Selection<EnterElement, Datum, PElement, PDatum>
+        appendSVGFull(SVGString: string): Selection<EnterElement, Datum, PElement, PDatum>
     }
 }
 
@@ -26,6 +27,14 @@ function appendSVG(SVGString: string) {
 
 }
 
+function appendSVGFull(SVGString: string) {
+    return this.select(function () {
+        return this.appendChild(document.importNode(new DOMParser()
+            .parseFromString(SVGString, 'application/xml').documentElement, true));
+    });
+
+}
+
 function makeCircle<EnterElement extends BaseType, Datum, PElement extends BaseType, PDatum>(color: string, cx: number, cy: number) {
     return (<Selection<EnterElement, Datum, PElement, PDatum>>this)
         .append('circle')
@@ -39,6 +48,7 @@ export class RegisterExtensions {
         d3.selection.prototype.sendMessage = sendMessage;
         d3.selection.prototype.makeCircle = makeCircle;
         d3.selection.prototype.appendSVG = appendSVG;
+        d3.selection.prototype.appendSVGFull = appendSVGFull;
 
     }
 }
