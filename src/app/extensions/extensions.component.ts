@@ -37,7 +37,11 @@ export class ExtensionsComponent implements OnInit {
       .attr('r', 20)
       .attr('cx', 200)
       .attr('cy', 100)
-      .makeCircle();
+      .sendMessage()
+      .sendMessage()
+      .sendMessage()
+      .sendMessage()
+      .sendMessage();
 
   }
 
