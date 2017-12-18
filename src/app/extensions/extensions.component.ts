@@ -46,10 +46,11 @@ export class ExtensionsComponent implements OnInit {
   }
 
   build2() {
-    // var svg = d3.selectAll("#target2")
-    //   .attr("width", this.w)
-    //   .attr("height", this.h);
-    // svg.makeCircle();
+    var svg = d3.selectAll("#target2")
+      .attr("width", this.w)
+      .attr("height", this.h);
+
+    svg.makeCircle();
 
   }
 
