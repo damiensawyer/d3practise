@@ -3,7 +3,7 @@ import { providerDef } from '@angular/core/src/view/provider';
 import { HelloD3bComponent } from './hello-d3b/hello-d3b/hello-d3b.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { Component, InjectionToken, NgModule, OnInit } from '@angular/core';
-
+// import * as d3x from './d3extensions';
 import { AppComponent } from './app.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { HelloD3Component } from './hello-d3/hello-d3.component';
