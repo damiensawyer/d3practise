@@ -2,18 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { BaseType } from 'd3';
 
+interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
+}
+// https://stackoverflow.com/questions/37297241/typescript-extend-external-javascript-library
+
+
+// .prototype.damien = () => { return "hello"; };
+
+interface MySelection extends Selection<BaseType, any, BaseType, any> {
+  damien: () => string;
+}
+
+class MySelectionConcrete<> implements MySelection {
+  constructor(source: Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum>) {
+
+  }
+  public damien: () => "damien";
+}
+
+
 @Component({
   selector: 'app-extensions',
   templateUrl: './extensions.component.html',
   styleUrls: ['./extensions.component.css']
 })
-
-interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
-  makeCircle<ChildElement extends BaseType>(): Selection<ChildElement, Datum, PElement, PDatum>;
-}
-
-// where do I attach this function?  d3.prototype??
-makeCircle = () => { return null; };
 
 export class ExtensionsComponent implements OnInit {
   data: number[];
@@ -21,6 +33,11 @@ export class ExtensionsComponent implements OnInit {
   h: 100;
   constructor() {
     this.data = [1];
+  }
+  makeCircle() { return null; };
+
+  toMySelection(target: Selection<BaseType, any, BaseType, any>) {
+    return target;
   }
 
   ngOnInit() {
@@ -53,10 +70,10 @@ export class ExtensionsComponent implements OnInit {
       .attr("width", this.w)
       .attr("height", this.h);
 
-    svg.selectAll("g")
-      .data(this.data)
-      .enter()
-      .makeCircle()
+    // svg.selectAll("g")
+    //   .data(this.data)
+    //   .enter().
+
 
   }
 
