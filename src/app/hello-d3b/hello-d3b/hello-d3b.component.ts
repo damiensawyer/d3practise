@@ -8,6 +8,13 @@ import { SampleChartService } from '../../classes/sample-chart';
 import { AppConfig } from '../../classes/AppConfigInterface';
 import { Element } from '@angular/compiler';
 
+/*
+appendsvg.... looks GOOD!!!!
+https://gist.github.com/biovisualize/373c6216b5634327099a
+
+
+*/
+
 @Component({
   selector: 'app-hello-d3b',
   templateUrl: 'hello-d3b.component.html',
@@ -40,7 +47,6 @@ export class HelloD3bComponent implements OnInit {
     var svg = d3.selectAll(".target")
       .attr("width", w)
       .attr("height", h);
-
 
     var axis = svg.append("g").call(yAxis)
       .attr("class", "axis")
