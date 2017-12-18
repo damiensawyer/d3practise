@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { BaseType } from 'd3';
-
+import { makeCircle } from '../circle';
 @Component({
   selector: 'app-extensions',
   templateUrl: './extensions.component.html',
@@ -36,15 +36,16 @@ export class ExtensionsComponent implements OnInit {
       .attr('fill', 'red')
       .attr('r', 20)
       .attr('cx', 200)
-      .attr('cy', 100);
+      .attr('cy', 100)
+      .makeCircle();
 
   }
 
   build2() {
-    var svg = d3.selectAll("#target2")
-      .attr("width", this.w)
-      .attr("height", this.h);
-    svg.makeCircle();
+    // var svg = d3.selectAll("#target2")
+    //   .attr("width", this.w)
+    //   .attr("height", this.h);
+    // svg.makeCircle();
 
   }
 

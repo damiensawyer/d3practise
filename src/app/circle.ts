@@ -8,8 +8,8 @@ declare module 'd3-selection' {
     }
 }
 
-function makeCircle() {
-    console.info('Damien, coffee on you!');
+export function makeCircle() {
+    console.log('Damien, coffee on you!');
 }
 
 d3.selection.prototype.makeCircle = makeCircle;
