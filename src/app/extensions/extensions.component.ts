@@ -91,7 +91,8 @@ export class ExtensionsComponent implements OnInit {
     svg.appendSVG('<g><rect width="300" fill="purple" height="30"></rect></g>');
     // svg.appendSVG('<rect width="400" fill="yellow" height="30"></rect>');
     svg
-      .appendSVGFull(this.sticker);
+      .appendSVGFull(this.sticker)
+      .attr("transform", "translate(" + (500) + ",0)"); // This isn't moving. I think that I Have to remove the svg, put the classes in a namespace, just have the <g> then positioni that. 
 
   }
 }
