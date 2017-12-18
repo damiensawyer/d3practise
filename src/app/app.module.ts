@@ -51,12 +51,7 @@ var routes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  // Need to move this into another file... but it appears to be working. Thanks SAM!! :-)
-  makeCircle() {
-    console.log('Damien, coffee on you!');
-  }
-
   constructor() {
-    d3.selection.prototype.makeCircle = this.makeCircle;
+    var s = new RegisterExtensions();
   }
 } 

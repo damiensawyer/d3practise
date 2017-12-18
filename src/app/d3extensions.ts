@@ -8,7 +8,7 @@ declare module 'd3-selection' {
 }
 
 function makeCircle() {
-    console.log('Damien, coffee on you!');
+    console.log('Damien, MORE coffee on you!');
 }
 export class RegisterExtensions {
     constructor() {
