@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { BaseType } from 'd3';
-//import { makeCircle } from '../circle';
+import * as c from '../d3extensions';
 @Component({
   selector: 'app-extensions',
   templateUrl: './extensions.component.html',

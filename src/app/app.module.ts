@@ -14,6 +14,9 @@ import { Test4Component } from './classes/test4/test4.component';
 import { FirstchartComponent } from './firstchart/firstchart.component';
 import { StraighthtmlComponent } from './straighthtml/straighthtml.component';
 import { ExtensionsComponent } from './extensions/extensions.component';
+import { RegisterExtensions } from './d3extensions';
+import * as d3 from 'd3';
+
 
 var routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'intro' },
@@ -34,6 +37,7 @@ var routes: Routes = [
     FirstchartComponent,
     StraighthtmlComponent,
     ExtensionsComponent
+
   ],
   imports: [
     BrowserModule,
@@ -46,4 +50,13 @@ var routes: Routes = [
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { } 
+export class AppModule {
+
+  makeCircle() {
+    console.log('Damien, coffee on you!');
+  }
+
+  constructor() {
+    d3.selection.prototype.makeCircle = this.makeCircle;
+  }
+} 
