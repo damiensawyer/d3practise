@@ -9,13 +9,11 @@ import { BaseType } from 'd3';
 })
 
 interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
-  makeCircle<ChildElement extends BaseType>(type: string): Selection<ChildElement, Datum, PElement, PDatum>;
+  makeCircle<ChildElement extends BaseType>(): Selection<ChildElement, Datum, PElement, PDatum>;
 }
 
-
-makeCircle = (type: string) => {
-
-};
+// where do I attach this function?  d3.prototype??
+makeCircle = () => { return null; };
 
 export class ExtensionsComponent implements OnInit {
   data: number[];
@@ -55,11 +53,10 @@ export class ExtensionsComponent implements OnInit {
       .attr("width", this.w)
       .attr("height", this.h);
 
-    // svg.selectAll("g")
-    //   .data(this.data)
-    //   .enter()
-    //   .append("g")
-    //   .append('svg')
+    svg.selectAll("g")
+      .data(this.data)
+      .enter()
+      .makeCircle()
 
   }
 
