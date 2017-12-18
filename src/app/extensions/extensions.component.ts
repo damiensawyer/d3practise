@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { BaseType } from 'd3';
 import * as c from '../d3extensions';
+import { RegisterExtensions } from '../d3extensions';
 @Component({
   selector: 'app-extensions',
   templateUrl: './extensions.component.html',
@@ -12,7 +13,7 @@ export class ExtensionsComponent implements OnInit {
   data: number[];
   w: 100;
   h: 100;
-  constructor() {
+  constructor(extensions: RegisterExtensions) {
     this.data = [1];
   }
 

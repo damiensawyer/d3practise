@@ -46,12 +46,12 @@ var routes: Routes = [
   ],
   providers: [
     { provide: APP_CONFIG, useValue: appConfig },
-    SampleChartService
+    SampleChartService,
+    RegisterExtensions
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor() {
-    var s = new RegisterExtensions();
   }
 } 
