@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
     <a class="btn btn-info" [routerLink]="['/hello-d3']">d3</a>
     <a class="btn btn-info" [routerLink]="['/hello-d3b']">d3b</a>
     <a class="btn btn-info" [routerLink]="['/straight-html']">straight-html</a>
+    <a class="btn btn-info" [routerLink]="['/extensions']">extensions</a>
     <a class="btn btn-info" [routerLink]="['/firstchart']">first chart</a>
    <div class="well">
     <router-outlet></router-outlet>
