@@ -38,9 +38,6 @@ export class ExtensionsComponent implements OnInit {
       .attr('cx', 200)
       .attr('cy', 100)
       .sendMessage()
-      .sendMessage()
-      .sendMessage()
-      .sendMessage()
       .sendMessage();
 
   }
@@ -50,11 +47,9 @@ export class ExtensionsComponent implements OnInit {
       .attr("width", this.w)
       .attr("height", this.h);
 
-    svg.makeCircle();
-
+    svg.makeCircle('orange', 200, 100)
+    svg.makeCircle('green', 250, 80)
+      .sendMessage()
+      .sendMessage();
   }
-
-
-
-
 }

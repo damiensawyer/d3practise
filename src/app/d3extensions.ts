@@ -4,7 +4,7 @@ import { creator, BaseType } from 'd3';
 declare module 'd3-selection' {
     interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
         sendMessage(...any): Selection<EnterElement, Datum, PElement, PDatum>
-        makeCircle(): Selection<EnterElement, Datum, PElement, PDatum>
+        makeCircle(color: string, cx: number, cy: number): Selection<EnterElement, Datum, PElement, PDatum>
     }
 }
 
@@ -17,14 +17,13 @@ function sendMessage(source) {
     });
 }
 
-function makeCircle<EnterElement extends BaseType, Datum, PElement extends BaseType, PDatum>() {
-    var color = 'pink';
+function makeCircle<EnterElement extends BaseType, Datum, PElement extends BaseType, PDatum>(color: string, cx: number, cy: number) {
     return (<Selection<EnterElement, Datum, PElement, PDatum>>this)
         .append('circle')
         .attr('fill', color)
         .attr('r', 20)
-        .attr('cx', 200)
-        .attr('cy', 100);
+        .attr('cx', cx)
+        .attr('cy', cy);
 }
 export class RegisterExtensions {
     constructor() {
