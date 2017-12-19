@@ -10,7 +10,7 @@ declare module 'd3-selection' {
     }
 }
 
-
+export type CustomSelection = Selection<BaseType, any, BaseType, any>
 
 function sendMessage(source) {
     return this.each(function () {

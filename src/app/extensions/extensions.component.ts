@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import { BaseType } from 'd3';
+import { BaseType, ScaleContinuousNumeric, AxisScale } from 'd3';
 import * as c from '../d3extensions';
-import { RegisterExtensions } from '../d3extensions';
+import { RegisterExtensions, CustomSelection } from '../d3extensions';
 @Component({
   selector: 'app-extensions',
   templateUrl: './extensions.component.html',
@@ -10,6 +10,7 @@ import { RegisterExtensions } from '../d3extensions';
 })
 
 export class ExtensionsComponent implements OnInit {
+
   sticker: string = '';
   data: number[];
   w: 500;
@@ -29,8 +30,8 @@ export class ExtensionsComponent implements OnInit {
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
-    var x = d3.scaleLinear().range([0, width]).domain([0, d3.max(data)]);
-    var y = d3.scaleLinear().range([height, 0]).domain([0, 500]);
+    var xScale = d3.scaleLinear().range([0, width]).domain([0, d3.max(data)]);
+    var yScale = d3.scaleLinear().range([height, 0]).domain([0, 500]);
 
     var svg = d3.select("#target2")
       .attr("width", width + margin.left + margin.right)
@@ -39,31 +40,12 @@ export class ExtensionsComponent implements OnInit {
       .attr("transform",
       "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+
+    this.drawAxis(svg, this.w, this.h, xScale, yScale, margin);
 
 
-    // text label for the x axis
-    svg.append("text")
-      .attr("transform",
-      "translate(" + (width / 2) + " ," +
-      (height + margin.top + 20) + ")")
-      .style("text-anchor", "middle")
-      .text("Date");
 
-    // Add the y Axis
-    svg.append("g")
-      .call(d3.axisLeft(y));
 
-    // text label for the y axis
-    svg.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
-      .attr("x", 0 - (height / 2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Value");
     //svg.makeCircle('orange', 200, 100)
     // svg.makeCircle('green', 250, 80)
     //   .sendMessage()
@@ -79,4 +61,37 @@ export class ExtensionsComponent implements OnInit {
 
 
   }
+
+  drawAxis<Domain>(svg: CustomSelection,
+    width: number,
+    height: number,
+    xScale: AxisScale<Domain>,
+    yScale: AxisScale<Domain>,
+    margin: { top: number; left: number; bottom: number; right: number; }) {
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(xScale));
+
+    // text label for the x axis
+    svg.append("text")
+      .attr("transform",
+      "translate(" + (width / 2) + " ," +
+      (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("Date");
+
+    // Add the y Axis
+    svg.append("g")
+      .call(d3.axisLeft(yScale));
+
+    // text label for the y axis
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x", 0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Value")
+  }
+
 }
