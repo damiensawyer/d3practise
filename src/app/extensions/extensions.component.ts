@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import { BaseType, ScaleContinuousNumeric, AxisScale } from 'd3';
-import * as c from '../d3extensions';
+import { BaseType, AxisScale } from 'd3';
 import { RegisterExtensions, CustomSelection } from '../d3extensions';
 @Component({
   selector: 'app-extensions',
@@ -13,8 +12,8 @@ export class ExtensionsComponent implements OnInit {
 
   sticker: string = '';
   data: number[];
-  w: 500;
-  h: 500;
+  w = 700;
+  h = 500;
   constructor() {
     this.data = [1];
   }
@@ -27,8 +26,8 @@ export class ExtensionsComponent implements OnInit {
   build() {
     var data = [10, 15, 20, 30, 60, 77];
     var margin = { top: 20, right: 20, bottom: 50, left: 70 },
-      width = 960 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+      width = this.w - margin.left - margin.right,
+      height = this.h - margin.top - margin.bottom;
 
     var xScale = d3.scaleLinear().range([0, width]).domain([0, d3.max(data)]);
     var yScale = d3.scaleLinear().range([height, 0]).domain([0, 500]);
@@ -36,15 +35,10 @@ export class ExtensionsComponent implements OnInit {
     var svg = d3.select("#target2")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform",
-      "translate(" + margin.left + "," + margin.top + ")");
+      .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-    this.drawAxis(svg, this.w, this.h, xScale, yScale, margin);
-
-
-
+    this.drawAxis(svg, width, height, xScale, yScale, margin);
 
     //svg.makeCircle('orange', 200, 100)
     // svg.makeCircle('green', 250, 80)
@@ -67,7 +61,7 @@ export class ExtensionsComponent implements OnInit {
     height: number,
     xScale: AxisScale<Domain>,
     yScale: AxisScale<Domain>,
-    margin: { top: number; left: number; bottom: number; right: number; }) {
+    margin: { top: number; right: number; bottom: number; left: number; }) {
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(xScale));
