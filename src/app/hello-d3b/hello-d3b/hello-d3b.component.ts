@@ -37,10 +37,10 @@ export class HelloD3bComponent implements OnInit {
     var w = 900;
 
     var xScale = d3.scaleLinear().domain([0, this.sampleChart.length - 1]).range([0, w]);
-    var yScale = d3.scaleLinear().domain([1, 100]).range([0, h]);
+    var yScale = d3.scaleLinear().domain([1, 100]).range([0, 200]);
     var yAxis = d3.axisLeft(yScale);
 
-    var padding = 5;
+    var padding = 30;
     var r = ((xScale(1) / 2) - padding) * setting;
     //create our SVG
     // var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
@@ -48,86 +48,59 @@ export class HelloD3bComponent implements OnInit {
       .attr("width", w)
       .attr("height", h);
 
-    var axis = svg.append("g").call(yAxis)
-      .attr("class", "axis")
+    var axis = svg.append("g")
+      .call(yAxis)
       .attr("transform", "translate(" + padding + ",0)");
 
 
-    var d = this.sampleChart.slice(0, 30);
-    //add dots
-    var data = svg
-      .selectAll()
-      .data(d)
-      .enter();
+    // var d = this.sampleChart.slice(0, 30);
+    // //add dots
+    // var data = svg
+    //   .selectAll()
+    //   .data(d)
+    //   .enter();
 
-    var line = d3.line()
-      .x(a => xScale(a[0]))
-      .y(a => yScale(a[1]));
+    // var line = d3.line()
+    //   .x(a => xScale(a[0]))
+    //   .y(a => yScale(a[1]));
 
-    data.append("circle");
-    data.selectAll("circle")
-      .transition()
-      .duration(500)
-      .ease(d3.easeBounceOut)
-      .attr("cx", function (d, i) { return xScale(i) + r })
-      .attr("cy", function (d) { return h / (2 + setting) })
-      .attr("r", r)
-      .attr("fill", "#666666");
+    // data.append("circle");
+    // data.selectAll("circle")
+    //   .transition()
+    //   .duration(500)
+    //   .ease(d3.easeBounceOut)
+    //   .attr("cx", function (d, i) { return xScale(i) + r })
+    //   .attr("cy", function (d) { return h / (2 + setting) })
+    //   .attr("r", r)
+    //   .attr("fill", "#666666");
 
-    var points = <[number, number][]>_.map(d, (x, i) => [i, x.sticker]);
-    data.append("path")
-      .attr("d", line(points))
-      .attr("stroke", "red")
-      .attr("stroke-width", 2)
-      .attr("fill", "none");
-
-
-    // if (error) throw error;
-    data
-
-      //.selectAll("circle")
-      .append(() => {
-        var importedNode = document.importNode(xml.documentElement, true);
-        var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        g.appendChild(importedNode);
-        g.setAttribute('class', 'sticker');
-        return g;
-      })
-      .attr('transform', function (d, i) {
-        return "translate(0, " + (i * 100) + "), scale(0.1)";
-      })
-      .attr("cx", function (d, i) { return xScale(i) + r })
-      .enter();
+    // var points = <[number, number][]>_.map(d, (x, i) => [i, x.sticker]);
+    // data.append("path")
+    //   .attr("d", line(points))
+    //   .attr("stroke", "red")
+    //   .attr("stroke-width", 2)
+    //   .attr("fill", "none");
 
 
-
-
-    //var ss = d3.xml("../../../assets/Set1/11-PossiblyFertifle.svg", (this: Request, error: any, d: any) => { });
-    // var ss = d3.xml("../../../assets/Set1/11-PossiblyFertifle.svg", (t: Request, d: any) => {
-    //   var importedNode = document.importNode(d.documentElement, true);
-
-    //   d3.selectAll("circle")
-    //     .each((c: HTMLElement) => {
-    //       c.appendChild(importedNode);
-    //     });
-
-    // });
-
-
-    // d3.xml("./atom.svg", "image/svg+xml", function (xml) {
-    //   document.getElementById('atom').appendChild(xml.documentElement);
-    //   window.setInterval(redElectron.draw, 50);
-    //   window.setInterval(purpleElectron.draw, 45);
-    //   window.setInterval(dash.draw, 45);
-    // });
-
-
-
+    // // if (error) throw error;
+    // data.append(() => {
+    //     var importedNode = document.importNode(xml.documentElement, true);
+    //     var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    //     g.appendChild(importedNode);
+    //     g.setAttribute('class', 'sticker');
+    //     return g;
+    //   })
+    //   .attr('transform', function (d, i) {
+    //     return "translate(0, " + (i * 100) + "), scale(0.1)";
+    //   })
+    //   .attr("cx", function (d, i) { return xScale(i) + r })
+    //   .enter();
   }
 
   ngOnInit() {
+    this.draw(1, null);
     d3.xml('../../../assets/Set1/17-PossiblyFertile1.svg', (a, xml) => {
-      this.draw(1, xml);
+      //this.draw(1, xml);
     });
   }
 }
