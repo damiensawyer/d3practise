@@ -1,10 +1,16 @@
 import * as d3 from 'd3'
 import { Selection } from 'd3-selection'
-import { creator, BaseType } from 'd3';
+import { creator, BaseType, AxisScale } from 'd3';
 declare module 'd3-selection' {
     interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
         sendMessage(...any): Selection<EnterElement, Datum, PElement, PDatum>
         makeCircle(color: string, cx: number, cy: number): Selection<EnterElement, Datum, PElement, PDatum>
+        makePositionedCircle<Domain extends number, cs extends CustomSelection>(
+            xScale: AxisScale<number>,
+            yScale: AxisScale<number>,
+            x: number,
+            y: number,
+            fill: string): CustomSelection
         appendSVG(SVGString: string): Selection<EnterElement, Datum, PElement, PDatum>
         appendSVGFull(SVGString: string): Selection<EnterElement, Datum, PElement, PDatum>
     }
@@ -32,7 +38,20 @@ function appendSVGFull(SVGString: string) {
         return this.appendChild(document.importNode(new DOMParser()
             .parseFromString(SVGString, 'application/xml').documentElement, true));
     });
+}
 
+function makePositionedCircle<Domain extends number, cs extends CustomSelection>(
+    xScale: AxisScale<number>,
+    yScale: AxisScale<number>,
+    x: number,
+    y: number,
+    fill: string) {
+    return (<cs>this)
+        .append('circle')
+        .attr('fill', fill)
+        .attr('r', 20)
+        .attr('cx', xScale(x))
+        .attr('cy', yScale(y));
 }
 
 function makeCircle<EnterElement extends BaseType, Datum, PElement extends BaseType, PDatum>(color: string, cx: number, cy: number) {
@@ -49,6 +68,7 @@ export class RegisterExtensions {
         d3.selection.prototype.makeCircle = makeCircle;
         d3.selection.prototype.appendSVG = appendSVG;
         d3.selection.prototype.appendSVGFull = appendSVGFull;
+        d3.selection.prototype.makePositionedCircle = makePositionedCircle;
 
     }
 }

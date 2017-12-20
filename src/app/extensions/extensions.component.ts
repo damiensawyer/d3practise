@@ -35,12 +35,15 @@ export class ExtensionsComponent implements OnInit {
     var svg = d3.select("#target2")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
+      //.append("g").attr("transform", "scale(0.5)") // make the whole chart smaller!! 
       .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
     this.drawAxis(svg, width, height, xScale, yScale, margin);
 
-    //svg.makeCircle('orange', 200, 100)
+    //svg.makePositionedCircle(xScale, yScale, 100, 100, 'red');
+
+    svg.selectAll().data(data).enter().makeCircle('orange', 200, 100)
     // svg.makeCircle('green', 250, 80)
     //   .sendMessage()
     //   .sendMessage();
@@ -59,8 +62,8 @@ export class ExtensionsComponent implements OnInit {
   drawAxis<Domain>(svg: CustomSelection,
     width: number,
     height: number,
-    xScale: AxisScale<Domain>,
-    yScale: AxisScale<Domain>,
+    xScale: AxisScale<number>,
+    yScale: AxisScale<number>,
     margin: { top: number; right: number; bottom: number; left: number; }) {
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
