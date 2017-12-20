@@ -4,15 +4,23 @@ import { creator, BaseType, AxisScale } from 'd3';
 declare module 'd3-selection' {
     interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
         sendMessage(...any): Selection<EnterElement, Datum, PElement, PDatum>
-        makeCircle(color: string, cx: number, cy: number): Selection<EnterElement, Datum, PElement, PDatum>
-        makePositionedCircle<Domain extends number, cs extends CustomSelection>(
+        makePositionedCircle<cs extends CustomSelection>(
             xScale: AxisScale<number>,
             yScale: AxisScale<number>,
             x: number,
             y: number,
             fill: string): CustomSelection
+        makePositionedSVG<cs extends CustomSelection>(
+            xScale: AxisScale<number>,
+            yScale: AxisScale<number>,
+            x: number,
+            y: number,
+            SVGString: string): CustomSelection
         appendSVG(SVGString: string): Selection<EnterElement, Datum, PElement, PDatum>
-        appendSVGFull(SVGString: string): Selection<EnterElement, Datum, PElement, PDatum>
+        appendSVGFull(SVGString: string, xScale: AxisScale<number>,
+            yScale: AxisScale<number>,
+            x: number,
+            y: number): Selection<EnterElement, Datum, PElement, PDatum>
     }
 }
 
@@ -33,14 +41,17 @@ function appendSVG(SVGString: string) {
 
 }
 
-function appendSVGFull(SVGString: string) {
-    return this.select(function () {
-        return this.appendChild(document.importNode(new DOMParser()
-            .parseFromString(SVGString, 'application/xml').documentElement, true));
-    });
+function appendSVGFull(SVGString: string,
+    xScale: AxisScale<number>,
+    yScale: AxisScale<number>,
+    x: number,
+    y: number) {
+    return (<CustomSelection>this)
+        .append('g').html(SVGString)
+        .attr("transform", "translate(" + xScale(x) + "," + yScale(y) + ")");;
 }
 
-function makePositionedCircle<Domain extends number, cs extends CustomSelection>(
+function makePositionedCircle<cs extends CustomSelection>(
     xScale: AxisScale<number>,
     yScale: AxisScale<number>,
     x: number,
@@ -54,21 +65,25 @@ function makePositionedCircle<Domain extends number, cs extends CustomSelection>
         .attr('cy', yScale(y));
 }
 
-function makeCircle<EnterElement extends BaseType, Datum, PElement extends BaseType, PDatum>(color: string, cx: number, cy: number) {
-    return (<Selection<EnterElement, Datum, PElement, PDatum>>this)
-        .append('circle')
-        .attr('fill', color)
-        .attr('r', 20)
-        .attr('cx', cx)
-        .attr('cy', cy);
+function makePositionedSVG<cs extends CustomSelection>(
+    xScale: AxisScale<number>,
+    yScale: AxisScale<number>,
+    x: number,
+    y: number,
+    SVGString: string) {
+    return this.select(function () {
+        return this.appendChild(document.importNode(new DOMParser()
+            .parseFromString(SVGString, 'application/xml').documentElement, true));
+    });
 }
+
 export class RegisterExtensions {
     constructor() {
         d3.selection.prototype.sendMessage = sendMessage;
-        d3.selection.prototype.makeCircle = makeCircle;
         d3.selection.prototype.appendSVG = appendSVG;
         d3.selection.prototype.appendSVGFull = appendSVGFull;
         d3.selection.prototype.makePositionedCircle = makePositionedCircle;
+        d3.selection.prototype.makePositionedSVG = makePositionedSVG;
 
     }
 }

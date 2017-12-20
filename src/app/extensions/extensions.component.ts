@@ -47,24 +47,10 @@ export class ExtensionsComponent implements OnInit {
 
     svg.makePositionedCircle(xScale, yScale, 50, 50, 'red');
     svg.makePositionedCircle(xScale, yScale, 40, 450, 'yellow');
+    svg.makePositionedCircle(xScale, yScale, 10, 450, 'green');
 
-
-    svg.makeCircle('green', 250, 80);
-
-    //svg.selectAll().data(data).enter().makeCircle('orange', 200, 100)
-
-    //   .sendMessage()
-    //   .sendMessage();
-
-    // svg.appendSVG('<circle class="circle2" cx="20" cy="20" r="20"></circle>');
-    //svg.appendSVG('<g><rect width="300" fill="purple" height="30"></rect></g>');
-    // svg.appendSVG('<rect width="400" fill="yellow" height="30"></rect>');
-    //svg.appendSVGFull(this.sticker);
-    // .attr("transform", "translate(" + (500) + ",0)"); // This isn't moving. I think that I Have to remove the svg, put the classes in a namespace, just have the <g> then positioni that. 
-
-
-
-
+    //    svg.makePositionedSVG(xScale, yScale, 40, 150, '<circle class="circle2" cx="20" cy="20" fill="pink" r="20"></circle>');
+    svg.appendSVGFull('<rect width="300" height="100" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />', xScale, yScale, 40, 50);
   }
 
   drawAxis<Domain>(svg: CustomSelection,
