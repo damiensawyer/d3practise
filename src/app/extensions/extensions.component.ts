@@ -14,7 +14,7 @@ export class ExtensionsComponent implements OnInit {
   data: number[];
   w = 700;
   h = 500;
-  constructor() {
+  constructor(extensions: RegisterExtensions) {
     this.data = [1];
   }
 
@@ -32,7 +32,11 @@ export class ExtensionsComponent implements OnInit {
     var xScale = d3.scaleLinear().range([0, width]).domain([0, d3.max(data)]);
     var yScale = d3.scaleLinear().range([height, 0]).domain([0, 500]);
 
-    var svg = d3.select("#target2")
+    // var svg = d3.selectAll("#target2")
+    //   .attr("width", this.w)
+    //   .attr("height", this.h);
+
+    var svg = d3.selectAll("#target2")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       //.append("g").attr("transform", "scale(0.5)") // make the whole chart smaller!! 
@@ -41,10 +45,14 @@ export class ExtensionsComponent implements OnInit {
 
     this.drawAxis(svg, width, height, xScale, yScale, margin);
 
-    //svg.makePositionedCircle(xScale, yScale, 100, 100, 'red');
+    svg.makePositionedCircle(xScale, yScale, 50, 50, 'red');
+    svg.makePositionedCircle(xScale, yScale, 40, 450, 'yellow');
 
-    svg.selectAll().data(data).enter().makeCircle('orange', 200, 100)
-    // svg.makeCircle('green', 250, 80)
+
+    svg.makeCircle('green', 250, 80);
+
+    //svg.selectAll().data(data).enter().makeCircle('orange', 200, 100)
+
     //   .sendMessage()
     //   .sendMessage();
 
