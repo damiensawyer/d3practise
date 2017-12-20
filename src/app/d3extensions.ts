@@ -10,14 +10,14 @@ declare module 'd3-selection' {
             x: number,
             y: number,
             fill: string): CustomSelection
-        makePositionedSVG<cs extends CustomSelection>(
-            xScale: AxisScale<number>,
-            yScale: AxisScale<number>,
-            x: number,
-            y: number,
-            SVGString: string): CustomSelection
+        // makePositionedSVG<cs extends CustomSelection>(
+        //     xScale: AxisScale<number>,
+        //     yScale: AxisScale<number>,
+        //     x: number,
+        //     y: number,
+        //     SVGString: string): CustomSelection
         appendSVG(SVGString: string): Selection<EnterElement, Datum, PElement, PDatum>
-        appendSVGFull(SVGString: string, xScale: AxisScale<number>,
+        makePositionedSVG(SVGString: string, xScale: AxisScale<number>,
             yScale: AxisScale<number>,
             x: number,
             y: number): Selection<EnterElement, Datum, PElement, PDatum>
@@ -41,14 +41,14 @@ function appendSVG(SVGString: string) {
 
 }
 
-function appendSVGFull(SVGString: string,
+function makePositionedSVG(SVGString: string,
     xScale: AxisScale<number>,
     yScale: AxisScale<number>,
     x: number,
     y: number) {
     return (<CustomSelection>this)
         .append('g').html(SVGString)
-        .attr("transform", "translate(" + xScale(x) + "," + yScale(y) + ")");;
+        .attr("transform", "translate(" + xScale(x) + "," + yScale(y) + ")"); // fix this https://stackoverflow.com/a/479643
 }
 
 function makePositionedCircle<cs extends CustomSelection>(
@@ -65,23 +65,23 @@ function makePositionedCircle<cs extends CustomSelection>(
         .attr('cy', yScale(y));
 }
 
-function makePositionedSVG<cs extends CustomSelection>(
-    xScale: AxisScale<number>,
-    yScale: AxisScale<number>,
-    x: number,
-    y: number,
-    SVGString: string) {
-    return this.select(function () {
-        return this.appendChild(document.importNode(new DOMParser()
-            .parseFromString(SVGString, 'application/xml').documentElement, true));
-    });
-}
+// function makePositionedSVG<cs extends CustomSelection>(
+//     xScale: AxisScale<number>,
+//     yScale: AxisScale<number>,
+//     x: number,
+//     y: number,
+//     SVGString: string) {
+//     return this.select(function () {
+//         return this.appendChild(document.importNode(new DOMParser()
+//             .parseFromString(SVGString, 'application/xml').documentElement, true));
+//     });
+// }
 
 export class RegisterExtensions {
     constructor() {
         d3.selection.prototype.sendMessage = sendMessage;
         d3.selection.prototype.appendSVG = appendSVG;
-        d3.selection.prototype.appendSVGFull = appendSVGFull;
+        //d3.selection.prototype.appendSVGFull = appendSVGFull;
         d3.selection.prototype.makePositionedCircle = makePositionedCircle;
         d3.selection.prototype.makePositionedSVG = makePositionedSVG;
 

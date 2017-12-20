@@ -50,7 +50,7 @@ export class ExtensionsComponent implements OnInit {
     svg.makePositionedCircle(xScale, yScale, 10, 450, 'green');
 
     //    svg.makePositionedSVG(xScale, yScale, 40, 150, '<circle class="circle2" cx="20" cy="20" fill="pink" r="20"></circle>');
-    svg.appendSVGFull('<rect width="300" height="100" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />', xScale, yScale, 40, 50);
+    svg.makePositionedSVG('<rect width="30" height="10" style="fill:teal;stroke-width:1;stroke:rgb(0,0,0)" />', xScale, yScale, 40, 50);
   }
 
   drawAxis<Domain>(svg: CustomSelection,
