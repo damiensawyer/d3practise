@@ -59,7 +59,8 @@ function drawSticker(xScale: AxisScale<number>,
         .append('image')
         //.attr('width', '50')
         .attr('height', '100')
-        .attr('xlink:href', '../../assets/doctored_set/' + href)
+        //.attr('xlink:href', '../../assets/doctored_set/' + href)
+        .attr('xlink:href', '../../assets/Set3/' + href)
         //.attr("transform", "scale(0.5)") // this didn't seem to work...but setting width OR height did.
         .attr("transform", "translate(" + xScale(x) + "," + yScale(y) + ")"); // fix this https://stackoverflow.com/a/479643
 }
