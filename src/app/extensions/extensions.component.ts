@@ -51,6 +51,9 @@ export class ExtensionsComponent implements OnInit {
 
     //    svg.makePositionedSVG(xScale, yScale, 40, 150, '<circle class="circle2" cx="20" cy="20" fill="pink" r="20"></circle>');
     svg.makePositionedSVG('<rect width="30" height="10" style="fill:teal;stroke-width:1;stroke:rgb(0,0,0)" />', xScale, yScale, 40, 50);
+    svg.drawSticker(xScale, yScale, 50, 250, 2);
+    svg.drawSticker(xScale, yScale, 30, 350, 14);
+    svg.drawSticker(xScale, yScale, 10, 450, 19);
   }
 
   drawAxis<Domain>(svg: CustomSelection,

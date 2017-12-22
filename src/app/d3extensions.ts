@@ -3,24 +3,11 @@ import { Selection } from 'd3-selection'
 import { creator, BaseType, AxisScale } from 'd3';
 declare module 'd3-selection' {
     interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
-        sendMessage(...any): Selection<EnterElement, Datum, PElement, PDatum>
-        makePositionedCircle<cs extends CustomSelection>(
-            xScale: AxisScale<number>,
-            yScale: AxisScale<number>,
-            x: number,
-            y: number,
-            fill: string): CustomSelection
-        // makePositionedSVG<cs extends CustomSelection>(
-        //     xScale: AxisScale<number>,
-        //     yScale: AxisScale<number>,
-        //     x: number,
-        //     y: number,
-        //     SVGString: string): CustomSelection
+        sendMessage(...any): CustomSelection
+        makePositionedCircle<cs extends CustomSelection>(xScale: AxisScale<number>, yScale: AxisScale<number>, x: number, y: number, fill: string): CustomSelection
         appendSVG(SVGString: string): Selection<EnterElement, Datum, PElement, PDatum>
-        makePositionedSVG(SVGString: string, xScale: AxisScale<number>,
-            yScale: AxisScale<number>,
-            x: number,
-            y: number): Selection<EnterElement, Datum, PElement, PDatum>
+        makePositionedSVG(SVGString: string, xScale: AxisScale<number>, yScale: AxisScale<number>, x: number, y: number): CustomSelection
+        drawSticker(xScale: AxisScale<number>, yScale: AxisScale<number>, x: number, y: number, stickerNumber: number): CustomSelection
     }
 }
 
@@ -48,6 +35,32 @@ function makePositionedSVG(SVGString: string,
     y: number) {
     return (<CustomSelection>this)
         .append('g').html(SVGString)
+        .attr("transform", "translate(" + xScale(x) + "," + yScale(y) + ")"); // fix this https://stackoverflow.com/a/479643
+}
+
+function drawSticker(xScale: AxisScale<number>,
+    yScale: AxisScale<number>,
+    x: number,
+    y: number,
+    stickerNumber: number) {
+    let href = '';
+    switch (stickerNumber) {
+        case 2:
+            href = '02-Spotting.svg'; break;
+        case 14:
+            href = '14-Peak1.svg'; break;
+        case 19:
+            href = '19-PossiblyFertile3.svg'; break;
+        default:
+            href = '02-Spotting.svg'; break;
+    }
+
+    return (<CustomSelection>this)
+        .append('image')
+        //.attr('width', '50')
+        .attr('height', '100')
+        .attr('xlink:href', '../../assets/doctored_set/' + href)
+        //.attr("transform", "scale(0.5)") // this didn't seem to work...but setting width OR height did.
         .attr("transform", "translate(" + xScale(x) + "," + yScale(y) + ")"); // fix this https://stackoverflow.com/a/479643
 }
 
@@ -84,6 +97,7 @@ export class RegisterExtensions {
         //d3.selection.prototype.appendSVGFull = appendSVGFull;
         d3.selection.prototype.makePositionedCircle = makePositionedCircle;
         d3.selection.prototype.makePositionedSVG = makePositionedSVG;
+        d3.selection.prototype.drawSticker = drawSticker;
 
     }
 }
