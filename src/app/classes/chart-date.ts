@@ -11,7 +11,7 @@ export class ChartDate {
 }
 
 // Just for testing.
-export class PositinedChartDate {
+export class PositionedChartDate {
 
     constructor(
         public sticker: Sticker,

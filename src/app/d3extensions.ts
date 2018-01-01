@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import { Selection } from 'd3-selection'
 import { creator, BaseType, AxisScale } from 'd3';
-import { PositinedChartDate } from './classes/chart-date';
+import { PositionedChartDate } from './classes/chart-date';
 import { Sticker } from './enums/sticker';
 declare module 'd3-selection' {
     interface Selection<GElement extends BaseType, Datum, PElement extends BaseType, PDatum> {
@@ -73,14 +73,27 @@ function processSticker(xScale: AxisScale<number>, yScale: AxisScale<number>) {
     var svgFileName = (stickerNumber: number): string => {
         var href = '';
         switch (stickerNumber) {
-            case 2:
-                href = '02-Spotting.svg'; break;
-            case 14:
-                href = '14-Peak1.svg'; break;
-            case 19:
-                href = '19-PossiblyFertile3.svg'; break;
-            default:
-                href = '02-Spotting.svg'; break;
+            case 0: href = '00-NoSelection.svg'; break;
+            case 1: href = '01-Bleed.svg'; break;
+            case 2: href = '02-Spotting.svg'; break;
+            case 3: href = '03-DryInfertile.svg'; break;
+            case 4: href = '04-Dry1.svg'; break;
+            case 5: href = '05-Dry2.svg'; break;
+            case 6: href = '06-Dry3.svg'; break;
+            case 7: href = '07-DischargeInfertile.svg'; break;
+            case 8: href = '08-UnchangingDischarge1.svg'; break;
+            case 9: href = '09-UnchangingDischarge2.svg'; break;
+            case 10: href = '10-UnchangingDischarge3.svg'; break;
+            case 11: href = '11-PossiblyFertile.svg'; break;
+            case 12: href = '12-BreakthroughBleed.svg'; break;
+            case 13: href = '13-Peak.svg'; break;
+            case 14: href = '14-Peak1.svg'; break;
+            case 15: href = '15-Peak2.svg'; break;
+            case 16: href = '16-Peak3.svg'; break;
+            case 17: href = '17-PossiblyFertile1.svg'; break;
+            case 18: href = '18-PossiblyFertile2.svg'; break;
+            case 19: href = '19-PossiblyFertile3.svg'; break;
+            default: href = '00-NoSelection'; break;
         }
         return href;
     }
@@ -90,9 +103,10 @@ function processSticker(xScale: AxisScale<number>, yScale: AxisScale<number>) {
         .append('image')
         .attr('height', '100')
         //.attr('xlink:href', '../../assets/doctored_set/' + href)
-        .attr('xlink:href', (d: PositinedChartDate, i) => '../../assets/Set3/' + svgFileName(d.sticker))
+        .attr('xlink:href', (d: PositionedChartDate, i) => '../../assets/Set1/' + svgFileName(d.sticker))
+        .attr('class', 'sticker')
         //.attr("transform", "scale(0.5)") // this didn't seem to work...but setting width OR height did.
-        .attr("transform", (d: PositinedChartDate, i) => "translate(" + xScale(d.x) + "," + yScale(d.y) + ")"); // fix this https://stackoverflow.com/a/479643
+        .attr("transform", (d: PositionedChartDate, i) => "translate(" + xScale(d.x) + "," + yScale(d.y) + ")"); // fix this https://stackoverflow.com/a/479643
 }
 
 function makePositionedCircle<cs extends CustomSelection>(
@@ -122,19 +136,33 @@ function makePositionedCircle<cs extends CustomSelection>(
 // }
 export class RegisterExtensions {
 
-    public GetData(version: number): PositinedChartDate[] {
+    public GetData(version: number): PositionedChartDate[] {
         switch (version) {
             case 1:
-                return [new PositinedChartDate(Sticker.Spotting_02, 10, 150)];
+                return [new PositionedChartDate(Sticker.Spotting_02, 10, 150)];
 
             case 2:
                 return [
-                    new PositinedChartDate(Sticker.Peak1_14, 10, 250),
-                    new PositinedChartDate(Sticker.Spotting_02, 59, 400),
-                    new PositinedChartDate(Sticker.PossiblyFertile3_19, 59, 250)
+                    new PositionedChartDate(Sticker.Peak1_14, 10, 250),
+                    new PositionedChartDate(Sticker.Spotting_02, 59, 400),
+                    new PositionedChartDate(Sticker.PossiblyFertile3_19, 59, 250)
                 ];
-
+            case 3:
+                return this.generateBigChart()
         }
+    }
+
+
+    generateBigChart(): PositionedChartDate[] {
+        var result = <PositionedChartDate[]>[];
+        var countPerRow = 8;
+        for (var i = 0; i < 20; i++) {
+
+            var row = Math.round(i / countPerRow) + 1;
+            var col = i % countPerRow;
+            result.push(new PositionedChartDate(i, 10 * col, 50 + (140 * row)));
+        }
+        return result;
     }
 
     constructor() {

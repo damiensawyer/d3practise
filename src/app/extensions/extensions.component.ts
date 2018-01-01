@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { BaseType, AxisScale } from 'd3';
 import { RegisterExtensions, CustomSelection } from '../d3extensions';
 import * as _ from 'lodash';
-import { PositinedChartDate } from '../classes/chart-date';
+import { PositionedChartDate } from '../classes/chart-date';
 @Component({
   selector: 'app-extensions',
   templateUrl: './extensions.component.html',
@@ -11,22 +11,30 @@ import { PositinedChartDate } from '../classes/chart-date';
 })
 
 export class ExtensionsComponent implements OnInit {
-  data: PositinedChartDate[][] = [];
+  data: PositionedChartDate[][] = [];
   title: string = '';
   sticker: string = '';
-  w = 700;
+  w = 1000;
   h = 500;
   constructor(public extensions: RegisterExtensions) {
     this.data[0] = this.extensions.GetData(1);
     this.data[1] = this.extensions.GetData(2);
+    this.data[2] = this.extensions.GetData(3);
   }
 
   ngOnInit() {
-    this.build(0);
+    this.build(2);
   }
 
   mode(mode: number) {
     this.build(mode);
+  }
+
+  size(height: number) {
+    var svg = d3.selectAll(".sticker");
+    svg.transition()
+      .attr('height', height);
+
   }
 
   build(dataSet: number) {
@@ -43,18 +51,27 @@ export class ExtensionsComponent implements OnInit {
 
     var svg = d3.selectAll("#target2")
       .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom);
-    //.append("g").attr("transform", "scale(0.5)") // make the whole chart smaller!! 
+      .attr("height", height + margin.top + margin.bottom)
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+      .append("g")
+      // .attr('class', 'chart')
+      //.attr("transform", "scale(0.5)") // make the whole chart smaller!! 
+      ;
     //.append("g")
-    //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
     this.drawAxis(svg, width, height, xScale, yScale, margin);
 
-    svg.selectAll("image").remove();
+    svg
+      //.selectAll('g.chart')
+      .selectAll(".sticker")
+      .remove();
 
 
-    svg.selectAll("image")
+    svg
+      //    .selectAll('g.chart')
+      .selectAll(".sticker")
       .data(chartData)
       .enter()
       .processSticker(xScale, yScale);
