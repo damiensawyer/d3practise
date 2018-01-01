@@ -103,7 +103,7 @@ function processSticker(xScale: AxisScale<number>, yScale: AxisScale<number>) {
         .append('image')
         .attr('height', '100')
         //.attr('xlink:href', '../../assets/doctored_set/' + href)
-        .attr('xlink:href', (d: PositionedChartDate, i) => '../../assets/Set1/' + svgFileName(d.sticker))
+        .attr('xlink:href', (d: PositionedChartDate, i) => '../../assets/Set3/' + svgFileName(d.sticker))
         .attr('class', 'sticker')
         //.attr("transform", "scale(0.5)") // this didn't seem to work...but setting width OR height did.
         .attr("transform", (d: PositionedChartDate, i) => "translate(" + xScale(d.x) + "," + yScale(d.y) + ")"); // fix this https://stackoverflow.com/a/479643
